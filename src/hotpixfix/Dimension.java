@@ -11,15 +11,20 @@ class Dimension {
   /** height of this */
   private int height;
 
+  /** size of this */
+  private int size;
+
   /**
    * Constructs a new Dimension 
-   * out of th given width and height
+   * out of th given width, height and size
    * @param width the given width
    * @param height the given height
+   * @param size the given size
    */
-  public Dimension(int width, int height) {
+  public Dimension(int width, int height, int size) {
     this.width = width;
     this.height = height;
+    this.size = size;
   }
 
   /**
@@ -32,6 +37,12 @@ class Dimension {
    * Returns the height of this
    * @return the height of this
    */
-  public int getWidth() { return height; }
+  public int getHeight() { return height; }
+
+  /**
+   * Returns the size of this
+   * @return the size of this
+   */
+  public int getSize() { return size; }
 
 }

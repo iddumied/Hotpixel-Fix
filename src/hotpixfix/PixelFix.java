@@ -32,13 +32,12 @@ class PixelFix {
    * @param pixels the given pixel positions
    * @param size the size of the hotpixel
    */
-  public PixelFix(File path, LinkedList<Dimension> pixels, int size) {
+  public PixelFix(File path, LinkedList<Dimension> pixels) {
     if (path == null || pixels == null) {
       throw new IllegalArgumentException();
     }
 
     this.path = path;
-    this.size = size;
 
     try {
       this.img = ImageIO.read(path);
@@ -48,6 +47,7 @@ class PixelFix {
     }
     
     for (Dimension d : pixels) {
+      this.size = d.getSize();
       repleacePixel(d, calcAvg(d));
     }
 
@@ -64,16 +64,18 @@ class PixelFix {
     if (ew > img.getWidth()) ew = img.getWidth();
     if (sh < 0) sh = 0;
     if (eh > img.getHeight()) eh = img.getHeight();
+    System.out.println("[DEBUG] " + img.getWidth() + " " + img.getHeight() + " " + sw + " " + ew + " " + sh + " " + eh);
 
     for (int w = sw; w < ew; w++) {
       for (int h = sh; h < eh; h++) {
-        img.setRGB(w, w, rgb);
+        System.out.println("[DEBUG} " + w + " " + h);
+        img.setRGB(w, h, rgb);
       }
     }
 
   }
 
-  private void calcSurroundingPositions(Dimension d) {
+  private LinkedList<Dimension> calcSurroundingPositions(Dimension d) {
     LinkedList<Dimension> pos = new LinkedList<Dimension>();
 
     int sw = d.getWidth() - 2 * size;
@@ -92,9 +94,11 @@ class PixelFix {
       for (int h = sh; h < eh; h++) {
         if (h > d.getHeight() - size && h < d.getHeight() + size) continue;
         
-        pos.add(new Dimension(w, h));
+        pos.add(new Dimension(w, h, 0));
       }
     }
+
+    return pos;
   }
 
   private int calcAvg(Dimension d) {
