@@ -17,6 +17,9 @@ class PixelFix {
   /** holds the image */
   private BufferedImage img;
 
+  /** holds the File name */
+  private File path;
+
   /** holds pthe position of the Pixels */
   private LinkedList<Dimension> pixels;
 
@@ -31,6 +34,8 @@ class PixelFix {
       throw new IllegalArgumentException();
     }
 
+    this.path = path;
+
     try {
       this.img = ImageIO.read(path);
     } catch (IOException e) {
@@ -41,6 +46,8 @@ class PixelFix {
     for (Dimension d : pixels) {
       img.setRGB(d.getWidth(), d.getHeight(), calcAvg(d));
     }
+
+    save()
   }
 
   private int calcAvg(Dimension d) {
@@ -75,6 +82,10 @@ class PixelFix {
     Color c = new Color(rgb[0], rgb[1], rgb[2]);
 
     return c.getRGB();
+  }
+
+  private save() {
+    ImageIO.write(img, "jpg", path);
   }
 
 }
