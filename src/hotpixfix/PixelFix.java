@@ -39,10 +39,8 @@ class PixelFix {
     }
     
     for (Dimension d : pixels) {
-
-
+      img.setRGB(d.getWidth(), d.getHeight(), calcAvg(d));
     }
-
   }
 
   private int calcAvg(Dimension d) {
